@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link, useLoaderData } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-function CoffeeCard({ coffee}) {
+function CoffeeCard({ coffee,coffees,setCoffees}) {
     const { coffeeName, coffeeType, roastLevel, imageUrl, details, best } = coffee;
 
 
@@ -26,11 +27,14 @@ function CoffeeCard({ coffee}) {
                 .then(data=>{
                    
                     if(data.deletedCount > 0){
+                     
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Your file has been deleted.",
+                            text: "Your Coffee has been deleted.",
                             icon: "success"
                           });
+                          const remaning = coffees.filter(cof => cof._id !== id)
+                          setCoffees(remaning)
                     }
                 })
             
@@ -40,6 +44,8 @@ function CoffeeCard({ coffee}) {
 
           });
     }
+
+
     return (
         <div className="flex p-4 border rounded shadow-md m-2">
             <img 
@@ -61,12 +67,17 @@ function CoffeeCard({ coffee}) {
                     >
                         View
                     </button>
+           <Link to={`/updateCoffee/${coffee._id}`}>
                     <button 
-                        onClick={() => onUpdate(coffee)} 
+                         
                         className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2"
                     >
                         Update
                     </button>
+                    
+                    
+                    
+                    </Link>
                     <button 
                         onClick={() => onDelete(coffee._id)} // Assuming coffee has an 'id' property
                         className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"

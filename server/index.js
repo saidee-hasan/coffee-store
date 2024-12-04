@@ -45,6 +45,37 @@ async function run() {
 
 
     });
+    app.get('/coffee/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await userCollection.findOne(query);
+      res.send(result)
+    })
+    app.put('/coffee/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const updateCoffee = req.body;
+    
+      console.log(updateCoffee);
+    
+      const coffee = {
+        $set: {
+          coffeeName: updateCoffee.coffeeName,
+          coffeeType: updateCoffee.coffeeType,
+          roastLevel: updateCoffee.roastLevel,
+          imageUrl: updateCoffee.imageUrl, // Changed from updateCoffee.name to updateCoffee.imageUrl
+          details: updateCoffee.details,
+        }
+      };
+    
+      try {
+        const result = await userCollection.updateOne(query, coffee, { upsert: true });
+        res.send(result);
+      } catch (error) {
+        console.error('Error updating coffee:', error);
+        res.status(500).send('Error updating coffee');
+      }
+    });
 
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
