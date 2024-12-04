@@ -37,4 +37,4 @@ To get started with the Coffee Store application, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/coffee-store.git
+   git clone [https://github.com/yourusername/coffee-store.git](https://github.com/saidee-hasan/coffee-store.git)
